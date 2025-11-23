@@ -30,7 +30,7 @@ export default function PortfolioSection() {
         const response = await fetch('/portfolio.json');
         const data = await response.json();
         // Add mock data for repo feel
-        const enhancedData = data.map((p: any) => ({
+        const enhancedData = data.map((p: Project) => ({
           ...p,
           description: p.description || "A high-performance web application built with modern technologies.",
           language: p.category === "E-commerce" ? "TypeScript" : "JavaScript",
@@ -93,8 +93,8 @@ export default function PortfolioSection() {
               key={category}
               onClick={() => setSelectedCategory(category)}
               className={`px-4 py-1.5 rounded-full text-sm font-mono border transition-all duration-200 ${selectedCategory === category
-                  ? 'bg-green-600/10 text-green-400 border-green-500/50'
-                  : 'bg-transparent text-gray-400 border-gray-700 hover:border-gray-500 hover:text-gray-200'
+                ? 'bg-green-600/10 text-green-400 border-green-500/50'
+                : 'bg-transparent text-gray-400 border-gray-700 hover:border-gray-500 hover:text-gray-200'
                 }`}
             >
               {category}

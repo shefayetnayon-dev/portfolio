@@ -25,7 +25,7 @@ const BlogSection = () => {
         const response = await fetch('/blog.json');
         const data = await response.json();
         // Add mock version numbers
-        const enhancedData = data.slice(0, 4).map((post: any) => ({
+        const enhancedData = data.slice(0, 4).map((post: BlogPost) => ({
           ...post,
           version: `v${Math.floor(Math.random() * 3)}.${Math.floor(Math.random() * 10)}.${Math.floor(Math.random() * 10)}`
         }));

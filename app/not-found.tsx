@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { FiAlertTriangle, FiHome, FiTerminal } from 'react-icons/fi';
+import { FiAlertTriangle, FiTerminal } from 'react-icons/fi';
 
 export default function NotFound() {
     return (

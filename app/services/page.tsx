@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { FiTerminal, FiCpu, FiActivity, FiLayers, FiArrowRight } from 'react-icons/fi';
+import { FiTerminal, FiActivity, FiLayers } from 'react-icons/fi';
 import Services from '../components/Services';
 import Link from 'next/link';
 
@@ -116,7 +116,7 @@ const ServicesPage = () => {
           </div>
 
           <div className="text-center mt-8 text-gray-500 font-mono">
-            {'}'} // End process execution
+            {'}'}
           </div>
         </div>
       </section>

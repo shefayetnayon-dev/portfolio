@@ -4,12 +4,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
-  FiSend,
-  FiUser,
-  FiMail,
-  FiMessageSquare,
   FiCheckCircle,
-  FiAlertCircle,
   FiFacebook,
   FiTwitter,
   FiLinkedin,

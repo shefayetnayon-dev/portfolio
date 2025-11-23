@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { FiMessageSquare, FiThumbsUp, FiGitCommit, FiTerminal, FiUser } from 'react-icons/fi';
+import { FiMessageSquare, FiThumbsUp, FiGitCommit, FiTerminal } from 'react-icons/fi';
 import Image from 'next/image';
 
 interface Testimonial {
@@ -159,8 +159,8 @@ const Testimonials = () => {
                 key={index}
                 onClick={() => setCurrentIndex(index)}
                 className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentIndex
-                    ? 'bg-purple-500 w-4'
-                    : 'bg-gray-700 hover:bg-gray-600'
+                  ? 'bg-purple-500 w-4'
+                  : 'bg-gray-700 hover:bg-gray-600'
                   }`}
                 aria-label={`Go to review ${index + 1}`}
               />

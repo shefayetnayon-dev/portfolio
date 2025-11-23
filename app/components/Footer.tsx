@@ -1,7 +1,6 @@
 // components/Footer.tsx
 "use client";
 
-import { motion } from 'framer-motion';
 import { FiGithub, FiLinkedin, FiTwitter, FiInstagram, FiMail, FiGitBranch, FiWifi, FiCpu } from 'react-icons/fi';
 import { FaWhatsapp } from "react-icons/fa";
 import Link from 'next/link';
@@ -94,7 +93,7 @@ const Footer = () => {
           </div>
 
           <div className="text-center md:text-right">
-            <p>&copy; {currentYear} Shefayet Nayon. MIT License.</p>
+            <p>&copy; {currentYear} Shefayet Nayon.</p>
           </div>
         </div>
       </div>

@@ -2,9 +2,8 @@
 "use client";
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 import Link from 'next/link';
-import { FiSearch, FiX, FiTerminal, FiCommand } from 'react-icons/fi';
+import { FiTerminal, FiCommand } from 'react-icons/fi';
 
 interface BlogPost {
   id: number;
@@ -134,8 +133,8 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-300 border-b border-transparent ${isScrolled
-          ? 'bg-[#0d1117]/90 backdrop-blur-md border-gray-800'
-          : 'bg-transparent'
+        ? 'bg-[#0d1117]/90 backdrop-blur-md border-gray-800'
+        : 'bg-transparent'
         }`}
     >
       <div className="container mx-auto px-4 py-3">

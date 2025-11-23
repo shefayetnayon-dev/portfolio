@@ -4,7 +4,6 @@
 import { motion } from 'framer-motion';
 import { FiBook, FiStar, FiGitBranch, FiActivity, FiTerminal } from 'react-icons/fi';
 import PortfolioSection from '../components/PortfolioSection';
-import Link from 'next/link';
 import { useState, useEffect } from 'react';
 
 const PortfolioPage = () => {

@@ -2,7 +2,7 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { FiGitCommit, FiGitBranch, FiTag, FiUser, FiCode, FiTerminal, FiArrowRight } from 'react-icons/fi';
+import { FiGitCommit, FiGitBranch, FiTag, FiCode, FiTerminal } from 'react-icons/fi';
 import Link from 'next/link';
 import About from '../components/About';
 

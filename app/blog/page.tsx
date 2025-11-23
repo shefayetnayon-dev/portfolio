@@ -2,9 +2,8 @@
 "use client";
 
 import { motion } from 'framer-motion';
-import { FiTerminal, FiRss, FiTag, FiCalendar, FiArrowRight, FiHash, FiFilter } from 'react-icons/fi';
+import { FiTerminal, FiRss, FiArrowRight, FiFilter } from 'react-icons/fi';
 import BlogSection from '../components/BlogSection';
-import Link from 'next/link';
 
 const BlogPage = () => {
   const featuredLog = {
@@ -78,8 +77,8 @@ const BlogPage = () => {
             <button
               key={cat}
               className={`px-3 py-1 rounded text-sm border transition-colors ${cat === "All"
-                  ? "bg-purple-600/10 text-purple-400 border-purple-500/50"
-                  : "bg-transparent text-gray-400 border-gray-700 hover:border-gray-500"
+                ? "bg-purple-600/10 text-purple-400 border-purple-500/50"
+                : "bg-transparent text-gray-400 border-gray-700 hover:border-gray-500"
                 }`}
             >
               {cat}

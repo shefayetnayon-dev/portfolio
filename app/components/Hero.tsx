@@ -33,21 +33,6 @@ const Hero = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const codeSnippet = `
-class Developer {
-  constructor() {
-    this.name = "Shefayet Nayon";
-    this.role = "Full Stack Developer";
-    this.skills = [
-      "React", "Next.js", 
-      "Node.js", "TypeScript"
-    ];
-  }
-
-  build() {
-    return "Scalable Solutions";
-  }
-}`;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0d1117] pt-20">
@@ -106,7 +91,7 @@ class Developer {
             </div>
 
             <div className="mt-12 flex items-center space-x-6 text-gray-500">
-              <a  target="_blank" href="https://github.com/shefayetnayon-dev" className="hover:text-white transition-colors"><FiGithub size={24} /></a>
+              <a target="_blank" href="https://github.com/shefayetnayon-dev" className="hover:text-white transition-colors"><FiGithub size={24} /></a>
               <a target="_blank" href="https://linkedin.com/shefayetnayon" className="hover:text-white transition-colors"><FiLinkedin size={24} /></a>
               <a target="_blank" href="https://x.com/ShefayetNayon" className="hover:text-white transition-colors"><FiTwitter size={24} /></a>
             </div>
