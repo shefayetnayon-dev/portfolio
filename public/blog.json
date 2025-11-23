@@ -1,0 +1,107 @@
+[
+  {
+    "id": 1,
+    "title": "Why Web Design Is More Than Just Pretty Colors",
+    "slug": "web-design-beyond-colors",
+    "img":"https://i.postimg.cc/CMXRtPyK/4f11b533-629a-46f4-a980-ec4aa6282903-cover.png",
+    "category": "Web Design",
+    "date": "2025-09-25",
+    "excerpt": "Web design is not just about aesthetics—it's about communication, clarity, and user trust.",
+    "content": "When people think of web design, they often imagine color palettes and typography. But true design goes deeper. It's about guiding users, reducing friction, and creating emotional resonance. A well-designed site builds trust before a single word is read. Layout, spacing, and interaction patterns all contribute to how users feel. In 2025, responsive design and accessibility are no longer optional—they're foundational. Designers must think like storytellers, not decorators."
+  },
+  {
+    "id": 2,
+    "title": "Getting Started with Next.js: A Beginner’s Guide",
+    "slug": "nextjs-beginners-guide",
+    "img":"https://i.postimg.cc/bJFZqLsV/1-VRPCj7h-RG-GVKR6-Mu0-L9g.png",
+    "category": "Next.js",
+    "date": "2025-09-26",
+    "excerpt": "Next.js makes React development faster, simpler, and more powerful. Here's how to begin.",
+    "content": "Next.js is a React framework that offers server-side rendering, file-based routing, and built-in performance optimizations. For beginners, the magic lies in its simplicity. You create pages by adding files to the `pages` or `app` directory. You get automatic code splitting, fast refresh, and SEO-friendly rendering. Whether you're building a blog or a SaaS dashboard, Next.js gives you the tools to scale without complexity. Start with `npx create-next-app`, and explore the power of hybrid rendering."
+  },
+  {
+    "id": 3,
+    "title": "React Hooks You Should Be Using in 2025",
+    "slug": "react-hooks-2025",
+    "img":"https://i.postimg.cc/nhv9qvw5/react-hooks-must-be-called-in-a-react-function-component-or-a-custom-react-hook-function.jpg",
+    "category": "React.js",
+    "date": "2025-09-27",
+    "excerpt": "Hooks changed how we write React. These are the ones that matter most today.",
+    "content": "React hooks like `useState`, `useEffect`, and `useContext` are staples—but in 2025, developers are leaning into `useReducer`, `useMemo`, and custom hooks more than ever. `useTransition` and `useDeferredValue` help manage async UI. Custom hooks let you abstract logic like theme toggling or form validation. The key is readability and reuse. Hooks make components cleaner, but overusing them can lead to complexity. Use them wisely, and your React code will stay elegant and maintainable."
+  },
+  {
+    "id": 4,
+    "title": "Designing for Dark Mode: Tips and Pitfalls",
+    "slug": "dark-mode-design-tips",
+    "img":"https://i.postimg.cc/CMXRtPyK/4f11b533-629a-46f4-a980-ec4aa6282903-cover.png",
+    "category": "Web Design",
+    "date": "2025-09-28",
+    "excerpt": "Dark mode isn't just a trend—it's a usability feature. But it needs thoughtful design.",
+    "content": "Dark mode reduces eye strain and saves battery life, but poor implementation can ruin UX. Avoid pure black backgrounds and ensure contrast ratios meet accessibility standards. Use Tailwind's `dark:` utilities to style components conditionally. Icons and images should adapt too—SVGs with `currentColor` work well. Test in both modes, and don't forget to respect user preferences via `prefers-color-scheme`. A well-designed dark mode feels intentional, not inverted."
+  },
+  {
+    "id": 5,
+    "title": "Building a Portfolio with Next.js and Tailwind CSS",
+    "slug": "nextjs-tailwind-portfolio",
+    "img":"https://i.postimg.cc/0ygJ6tZW/images-4.jpg",
+    "category": "Next.js",
+    "date": "2025-09-29",
+    "excerpt": "Your portfolio should reflect your personality and skills. Next.js + Tailwind makes that easy.",
+    "content": "Next.js and Tailwind CSS are a dream combo for building fast, responsive, and expressive portfolios. With file-based routing and utility-first styling, you can iterate quickly. Use `app/layout.tsx` for consistent structure, and `next-themes` for dark mode. Tailwind's `whitespace-pre-line` helps with expressive multi-line content. Add animation with `framer-motion`, and deploy to Vercel in seconds. Your portfolio isn't just a site—it's your digital handshake."
+  },
+  {
+    "id": 6,
+    "title": "React vs Next.js: What Should You Choose?",
+    "slug": "react-vs-nextjs",
+    "img":"https://i.postimg.cc/TwPy8B2s/Difference-Between-Next-js-and-React-1400x700.jpg",
+    "category": "React.js",
+    "date": "2025-09-30",
+    "excerpt": "React is a library. Next.js is a framework. Here's how to decide which fits your project.",
+    "content": "React gives you flexibility. Next.js gives you structure. If you're building a small widget or embedding React in an existing app, React alone is perfect. But for full-stack apps, Next.js offers routing, SSR, and API routes out of the box. It reduces boilerplate and improves performance. In 2025, most React developers are choosing Next.js for production apps. But knowing when to use plain React is still a valuable skill."
+  },
+  {
+    "id": 7,
+    "title": "Typography in Web Design: Crafting Readable Interfaces",
+    "slug": "typography-web-design",
+    "category": "Web Design",
+    "date": "2025-10-01",
+    "excerpt": "Good typography makes content readable, scannable, and beautiful. Here's how to master it.",
+    "content": "Typography is the backbone of web design. Font choices, line height, and spacing affect how users consume content. Use system fonts for speed, or variable fonts like Geist for personality. Tailwind's `font-sans`, `leading-relaxed`, and `tracking-tight` utilities help fine-tune text. Avoid long line lengths and ensure contrast. In expressive design, typography is voice. Treat it like a conversation, not decoration."
+  },
+  {
+    "id": 8,
+    "title": "Using JSON to Drive Dynamic Layouts in React",
+    "slug": "json-driven-react-layouts",
+    "category": "React.js",
+    "date": "2025-10-02",
+    "excerpt": "JSON isn't just for APIs. You can use it to power layouts, cards, and content.",
+    "content": "React's component model pairs beautifully with JSON-driven data. Whether you're rendering testimonials, blog posts, or project cards, storing content in JSON makes it easy to update and scale. Use `.map()` to iterate, and TypeScript interfaces to ensure structure. This approach keeps logic separate from content, and empowers non-devs to contribute. In 2025, JSON-first workflows are powering everything from dashboards to landing pages."
+  },
+  {
+    "id": 9,
+    "title": "Tailwind CSS Tips for Faster UI Development",
+    "slug": "tailwind-css-tips",
+    "category": "Web Design",
+    "date": "2025-10-03",
+    "excerpt": "Tailwind speeds up UI work—but only if you use it wisely. Here's how to stay efficient.",
+    "content": "Tailwind CSS is fast, but without discipline it can become messy. Use component extraction for repeated patterns. Leverage `@apply` in global styles for consistency. Use `group` and `peer` for interactive states. Keep your `content` paths clean to avoid purge issues. And always name your layers—`z-10`, `z-50`—with intent. Tailwind is a scalpel, not a hammer. Use it to carve clean, expressive interfaces."
+  },
+  {
+    "id": 10,
+    "title": "Deploying Next.js Apps to Vercel: Step-by-Step",
+    "slug": "deploy-nextjs-vercel",
+    "category": "Next.js",
+    "date": "2025-10-04",
+    "excerpt": "Vercel is the home of Next.js. Here's how to deploy your app in minutes.",
+    "content": "Deploying to Vercel is seamless. After pushing your code to GitHub, connect your repo to Vercel. It auto-detects Next.js and sets up builds. You get preview URLs for every branch, and instant rollback. Use environment variables for secrets, and `vercel.json` for custom routing. Vercel's edge network ensures fast global delivery. In 2025, it's the default choice for frontend devs building with Next.js."
+  },
+  {
+    "id": 11,
+    "title": "React হুকস ব্যবহারের সুবিধা",
+    "slug": "react-",
+    "category": "Development",
+    "date": "2025-10-01",
+    "excerpt": "যা ক্লাস কম্পোনেন্ট ব্যবহার না করেই ফাংশনাল কম্পোনেন্ট-এ স্টেট (state), লাইফসাইকেল মেথড (lifecycle methods) এবং অন্যান্য React বৈশিষ্ট্য (features) ব্যবহার করার সুযোগ দেয়।",
+    "content": "React হুকস হলো বিশেষ ফাংশন, যা ক্লাস কম্পোনেন্ট ব্যবহার না করেই ফাংশনাল কম্পোনেন্ট-এ স্টেট (state), লাইফসাইকেল মেথড (lifecycle methods) এবং অন্যান্য React বৈশিষ্ট্য (features) ব্যবহার করার সুযোগ দেয়। এটি কোডকে আরও সহজ, পঠনযোগ্য (readable), পুনর্ব্যবহারযোগ্য (reusable) এবং পরিচালনাযোগ্য করে তোলে, যা React অ্যাপ্লিকেশন তৈরিতে গুরুত্বপূর্ণ ভূমিকা পালন করে। \nReact হুকস ব্যবহারের সুবিধা:\nসহজ ও সংক্ষিপ্ত কোড:\nক্লাস কম্পোনেন্ট লেখার জটিলতা এড়ানো যায়, ফলে কোড লেখা ও পড়া সহজ হয়। \nপুনর্ব্যবহারযোগ্যতা বৃদ্ধি:\nকাস্টম হুক (custom hooks) তৈরি করে একই লজিক একাধিক কম্পোনেন্টে ব্যবহার করা যায়, যা কোড পুনঃব্যবহার সহজ করে। \nকার্যকারিতা উন্নত:\nক্লাস কম্পোনেন্টের প্রয়োজনীয়তা কমে যাওয়ায় কোডের কার্যকারিতা বৃদ্ধি পায়। \nস্টেট ও লাইফসাইকেল ম্যানেজমেন্ট:\nফাংশনাল কম্পোনেন্টে স্টেট (যেমন useState) এবং সাইড-এফেক্ট (side-effects) যেমন ডেটা ফেচ করা বা সাবস্ক্রিপশন ম্যানেজ করতে (useEffect) হুকস ব্যবহার করা যায়। \nকিছু গুরুত্বপূর্ণ React হুকস:\nuseState:\nফাংশনাল কম্পোনেন্টে লোকাল স্টেট যোগ করার জন্য ব্যবহৃত হয়। \nuseEffect:\nফাংশনাল কম্পোনেন্ট থেকে সাইড-এফেক্ট (যেমন ডেটা লোড করা বা DOM ম্যানিপুলেট করা) পরিচালনা করার জন্য ব্যবহৃত হয়। \nuseRef:\nDOM এলিমেন্টের সরাসরি অ্যাক্সেস বা অন্য কোনো পরিবর্তনশীল ডেটা ধরে রাখতে ব্যবহৃত হয়, যা কম্পোনেন্টের রেন্ডারের মাঝেও টিকে থাকে। \nuseContext:\nগ্লোবাল স্টেট বা ডেটা সহজে অ্যাক্সেস করতে সাহায্য করে। \nকখন ব্যবহার করবেন:\nReact 16.8 সংস্করণ থেকে হুকস ব্যবহার করা যায় এবং এটি নতুন প্রোজেক্টের জন্য সুপারিশ করা হয়।\nআপনি যদি আপনার বিদ্যমান কম্পোনেন্টগুলোতে স্টেট বা লাইফসাইকেল বৈশিষ্ট্য যুক্ত করতে চান, তাহলে ক্লাস কম্পোনেন্ট না লিখে হুকস ব্যবহার করতে পারেন। \nReact হুকস ব্যবহার করে, আপনি আরও উন্নত, দক্ষ এবং পরিষ্কার কোড লিখতে পারবেন যা অ্যাপ্লিকেশন ডেভলপমেন্টকে অনেক সহজ করে তোলে। "
+  }
+]
