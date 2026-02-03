@@ -1,0 +1,168 @@
+---
+title: 'TypeScript 5.0: Game-Changing Features You Need to Know'
+date: '2026-02-04'
+excerpt: 'Explore the revolutionary features in TypeScript 5.0 including decorators, const type parameters, and performance improvements that will transform your development workflow.'
+category: 'TypeScript'
+author: 'Shefayet Nayon'
+readTime: '10 min read'
+version: 'v5.0.0'
+---
+
+# TypeScript 5.0: The Evolution Continues
+
+TypeScript 5.0 brings groundbreaking features that make type-safe development more powerful and intuitive than ever before.
+
+## Decorators: Now Official
+
+After years in experimental mode, decorators are finally standardized in TypeScript 5.0, following the Stage 3 ECMAScript proposal.
+
+```tsx
+function logged(target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+  const original = descriptor.value;
+  
+  descriptor.value = function(...args: any[]) {
+    console.log(`Calling ${propertyKey} with`, args);
+    const result = original.apply(this, args);
+    console.log(`Result:`, result);
+    return result;
+  };
+  
+  return descriptor;
+}
+
+class Calculator {
+  @logged
+  add(a: number, b: number) {
+    return a + b;
+  }
+}
+
+const calc = new Calculator();
+calc.add(5, 3); // Logs: "Calling add with [5, 3]" and "Result: 8"
+```
+
+## Const Type Parameters
+
+This feature allows you to preserve literal types through generic functions, eliminating type widening issues.
+
+```tsx
+// Before TypeScript 5.0
+function oldWay<T>(arr: T[]) {
+  return arr;
+}
+
+const result1 = oldWay([1, 2, 3]); // Type: number[]
+
+// With TypeScript 5.0
+function newWay<const T>(arr: T[]) {
+  return arr;
+}
+
+const result2 = newWay([1, 2, 3]); // Type: readonly [1, 2, 3]
+```
+
+## Enum Performance Improvements
+
+TypeScript 5.0 optimizes enum handling, reducing bundle size and improving runtime performance.
+
+```tsx
+enum Status {
+  Pending = "PENDING",
+  Active = "ACTIVE",
+  Completed = "COMPLETED"
+}
+
+// Now compiles to more efficient JavaScript
+```
+
+## All Enums Are Union Enums
+
+Every enum member is now treated as a literal type, providing better type narrowing.
+
+```tsx
+enum Direction {
+  Up,
+  Down,
+  Left,
+  Right
+}
+
+function move(direction: Direction) {
+  switch (direction) {
+    case Direction.Up:
+      return "Moving up";
+    case Direction.Down:
+      return "Moving down";
+    // TypeScript now enforces exhaustive checking
+  }
+}
+```
+
+## Speed Improvements
+
+TypeScript 5.0 is 10-20% faster in most scenarios:
+
+- Faster type checking
+- Reduced memory consumption
+- Improved IDE responsiveness
+
+## Supporting Types in package.json
+
+You can now specify multiple type definition files for different module systems.
+
+```json
+{
+  "name": "my-package",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.mts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  }
+}
+```
+
+## Resolution Customization Flags
+
+New `--moduleResolution bundler` option better aligns with modern bundlers like Vite and webpack.
+
+```json
+{
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true
+  }
+}
+```
+
+## Best Practices
+
+1. **Migrate to Standard Decorators**: Update legacy experimental decorators
+2. **Use Const Type Parameters**: For better type inference in utility functions
+3. **Enable Strict Mode**: Leverage improved type checking
+4. **Update tsconfig.json**: Use new resolution options
+
+## Migration Tips
+
+```bash
+# Update TypeScript
+npm install -D typescript@latest
+
+# Check for breaking changes
+npx tsc --noEmit
+
+# Update decorators
+# Remove "experimentalDecorators" from tsconfig.json
+```
+
+## Conclusion
+
+TypeScript 5.0 represents a major leap forward in type-safe JavaScript development. The standardization of decorators, const type parameters, and performance improvements make it an essential upgrade for any serious TypeScript project.
+
+Start using these features today to write more maintainable, performant, and type-safe code!

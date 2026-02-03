@@ -1,0 +1,503 @@
+---
+title: 'Full-Stack Authentication: Modern Patterns with Next.js 14'
+date: '2026-02-01'
+excerpt: 'Build secure, scalable authentication systems using Next.js 14, NextAuth.js v5, and modern security best practices. From OAuth to passwordless login.'
+category: 'Security'
+author: 'Shefayet Nayon'
+readTime: '13 min read'
+version: 'v5.0.0'
+---
+
+# Authentication in the Modern Era
+
+Authentication is the foundation of secure web applications. Let's build it right with Next.js 14 and the latest security patterns.
+
+## NextAuth.js v5 (Auth.js)
+
+The evolution of NextAuth brings better TypeScript support and improved developer experience.
+
+```bash
+npm install next-auth@beta
+```
+
+### Basic Setup
+
+```tsx
+// auth.ts
+import NextAuth from 'next-auth';
+import GitHub from 'next-auth/providers/github';
+import Google from 'next-auth/providers/google';
+import Credentials from 'next-auth/providers/credentials';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import { prisma } from './lib/prisma';
+import bcrypt from 'bcryptjs';
+
+export const { handlers, auth, signIn, signOut } = NextAuth({
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    GitHub({
+      clientId: process.env.GITHUB_ID!,
+      clientSecret: process.env.GITHUB_SECRET!,
+    }),
+    Google({
+      clientId: process.env.GOOGLE_ID!,
+      clientSecret: process.env.GOOGLE_SECRET!,
+    }),
+    Credentials({
+      credentials: {
+        email: { label: 'Email', type: 'email' },
+        password: { label: 'Password', type: 'password' },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          return null;
+        }
+
+        const user = await prisma.user.findUnique({
+          where: { email: credentials.email as string },
+        });
+
+        if (!user || !user.hashedPassword) {
+          return null;
+        }
+
+        const isValid = await bcrypt.compare(
+          credentials.password as string,
+          user.hashedPassword
+        );
+
+        if (!isValid) {
+          return null;
+        }
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+        };
+      },
+    }),
+  ],
+  session: {
+    strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/login',
+    error: '/auth/error',
+  },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    },
+  },
+});
+```
+
+### Route Handler
+
+```tsx
+// app/api/auth/[...nextauth]/route.ts
+import { handlers } from '@/auth';
+
+export const { GET, POST } = handlers;
+```
+
+## Protected Routes with Middleware
+
+```tsx
+// middleware.ts
+import { auth } from '@/auth';
+import { NextResponse } from 'next/server';
+
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
+  const isOnDashboard = req.nextUrl.pathname.startsWith('/dashboard');
+
+  if (isOnDashboard && !isLoggedIn) {
+    return NextResponse.redirect(new URL('/login', req.url));
+  }
+
+  return NextResponse.next();
+});
+
+export const config = {
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
+};
+```
+
+## Server Components Authentication
+
+```tsx
+// app/dashboard/page.tsx
+import { auth } from '@/auth';
+import { redirect } from 'next/navigation';
+
+export default async function DashboardPage() {
+  const session = await auth();
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  return (
+    <div>
+      <h1>Welcome, {session.user?.name}!</h1>
+      <p>Email: {session.user?.email}</p>
+    </div>
+  );
+}
+```
+
+## Client Components Authentication
+
+```tsx
+// components/UserButton.tsx
+'use client';
+
+import { useSession, signIn, signOut } from 'next-auth/react';
+
+export default function UserButton() {
+  const { data: session, status } = useSession();
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (session) {
+    return (
+      <div className="user-menu">
+        <img src={session.user?.image || '/default-avatar.png'} alt="Avatar" />
+        <span>{session.user?.name}</span>
+        <button onClick={() => signOut()}>Sign Out</button>
+      </div>
+    );
+  }
+
+  return <button onClick={() => signIn()}>Sign In</button>;
+}
+```
+
+## Passwordless Authentication
+
+```tsx
+// auth.ts - Add Email provider
+import Email from 'next-auth/providers/email';
+
+export const { handlers, auth } = NextAuth({
+  providers: [
+    Email({
+      server: {
+        host: process.env.EMAIL_SERVER_HOST,
+        port: process.env.EMAIL_SERVER_PORT,
+        auth: {
+          user: process.env.EMAIL_SERVER_USER,
+          pass: process.env.EMAIL_SERVER_PASSWORD,
+        },
+      },
+      from: process.env.EMAIL_FROM,
+    }),
+  ],
+});
+```
+
+## Two-Factor Authentication (2FA)
+
+```tsx
+// lib/2fa.ts
+import speakeasy from 'speakeasy';
+import QRCode from 'qrcode';
+
+export async function generateSecret(email: string) {
+  const secret = speakeasy.generateSecret({
+    name: `MyApp (${email})`,
+    length: 32,
+  });
+
+  const qrCode = await QRCode.toDataURL(secret.otpauth_url!);
+
+  return {
+    secret: secret.base32,
+    qrCode,
+  };
+}
+
+export function verifyToken(secret: string, token: string): boolean {
+  return speakeasy.totp.verify({
+    secret,
+    encoding: 'base32',
+    token,
+    window: 2,
+  });
+}
+```
+
+```tsx
+// app/api/2fa/setup/route.ts
+import { auth } from '@/auth';
+import { generateSecret } from '@/lib/2fa';
+import { prisma } from '@/lib/prisma';
+
+export async function POST() {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  }
+
+  const { secret, qrCode } = await generateSecret(session.user.email);
+
+  // Store secret temporarily
+  await prisma.user.update({
+    where: { email: session.user.email },
+    data: { twoFactorSecret: secret },
+  });
+
+  return Response.json({ qrCode });
+}
+```
+
+## Role-Based Access Control (RBAC)
+
+```tsx
+// lib/rbac.ts
+export enum Role {
+  USER = 'USER',
+  ADMIN = 'ADMIN',
+  MODERATOR = 'MODERATOR',
+}
+
+export enum Permission {
+  READ_POST = 'READ_POST',
+  CREATE_POST = 'CREATE_POST',
+  DELETE_POST = 'DELETE_POST',
+  MANAGE_USERS = 'MANAGE_USERS',
+}
+
+const rolePermissions: Record<Role, Permission[]> = {
+  [Role.USER]: [Permission.READ_POST, Permission.CREATE_POST],
+  [Role.MODERATOR]: [
+    Permission.READ_POST,
+    Permission.CREATE_POST,
+    Permission.DELETE_POST,
+  ],
+  [Role.ADMIN]: Object.values(Permission),
+};
+
+export function hasPermission(role: Role, permission: Permission): boolean {
+  return rolePermissions[role].includes(permission);
+}
+```
+
+```tsx
+// components/ProtectedAction.tsx
+import { auth } from '@/auth';
+import { hasPermission, Permission } from '@/lib/rbac';
+
+export default async function DeleteButton({ postId }: { postId: string }) {
+  const session = await auth();
+  const canDelete = hasPermission(session?.user?.role, Permission.DELETE_POST);
+
+  if (!canDelete) {
+    return null;
+  }
+
+  return <button>Delete Post</button>;
+}
+```
+
+## Session Management
+
+```tsx
+// lib/session.ts
+import { Redis } from '@upstash/redis';
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_URL!,
+  token: process.env.UPSTASH_REDIS_TOKEN!,
+});
+
+export async function createSession(userId: string, data: any) {
+  const sessionId = crypto.randomUUID();
+  
+  await redis.setex(
+    `session:${sessionId}`,
+    86400 * 7, // 7 days
+    JSON.stringify({ userId, ...data })
+  );
+  
+  return sessionId;
+}
+
+export async function getSession(sessionId: string) {
+  const data = await redis.get(`session:${sessionId}`);
+  return data ? JSON.parse(data as string) : null;
+}
+
+export async function deleteSession(sessionId: string) {
+  await redis.del(`session:${sessionId}`);
+}
+```
+
+## Security Best Practices
+
+### 1. Password Hashing
+
+```tsx
+import bcrypt from 'bcryptjs';
+
+// Hash password
+const hashedPassword = await bcrypt.hash(password, 12);
+
+// Verify password
+const isValid = await bcrypt.compare(password, hashedPassword);
+```
+
+### 2. CSRF Protection
+
+```tsx
+// NextAuth.js handles CSRF automatically
+// For custom forms, use tokens
+import { getCsrfToken } from 'next-auth/react';
+
+export default async function LoginForm() {
+  const csrfToken = await getCsrfToken();
+
+  return (
+    <form method="post" action="/api/auth/callback/credentials">
+      <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+      {/* Other fields */}
+    </form>
+  );
+}
+```
+
+### 3. Rate Limiting
+
+```tsx
+// middleware.ts
+import { Ratelimit } from '@upstash/ratelimit';
+import { Redis } from '@upstash/redis';
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(5, '1 m'), // 5 login attempts per minute
+});
+
+export async function middleware(req: Request) {
+  if (req.url.includes('/api/auth/callback/credentials')) {
+    const ip = req.headers.get('x-forwarded-for') ?? 'anonymous';
+    const { success } = await ratelimit.limit(ip);
+
+    if (!success) {
+      return new Response('Too many requests', { status: 429 });
+    }
+  }
+}
+```
+
+### 4. Secure Cookies
+
+```tsx
+// auth.ts
+export const { handlers, auth } = NextAuth({
+  cookies: {
+    sessionToken: {
+      name: '__Secure-next-auth.session-token',
+      options: {
+        httpOnly: true,
+        sameSite: 'lax',
+        path: '/',
+        secure: true, // HTTPS only
+      },
+    },
+  },
+});
+```
+
+## Database Schema (Prisma)
+
+```prisma
+model User {
+  id                String    @id @default(cuid())
+  name              String?
+  email             String    @unique
+  emailVerified     DateTime?
+  image             String?
+  hashedPassword    String?
+  twoFactorSecret   String?
+  twoFactorEnabled  Boolean   @default(false)
+  role              Role      @default(USER)
+  accounts          Account[]
+  sessions          Session[]
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+enum Role {
+  USER
+  MODERATOR
+  ADMIN
+}
+```
+
+## Testing Authentication
+
+```tsx
+// __tests__/auth.test.ts
+import { signIn } from '@/auth';
+
+describe('Authentication', () => {
+  it('should authenticate valid credentials', async () => {
+    const result = await signIn('credentials', {
+      email: 'test@example.com',
+      password: 'password123',
+      redirect: false,
+    });
+
+    expect(result?.error).toBeUndefined();
+  });
+
+  it('should reject invalid credentials', async () => {
+    const result = await signIn('credentials', {
+      email: 'test@example.com',
+      password: 'wrongpassword',
+      redirect: false,
+    });
+
+    expect(result?.error).toBeDefined();
+  });
+});
+```
+
+## Conclusion
+
+Modern authentication requires a multi-layered approach combining OAuth, passwordless options, 2FA, and robust security practices. NextAuth.js v5 provides the foundation, but proper implementation of RBAC, rate limiting, and secure session management is crucial.
+
+Build authentication systems that are both secure and user-friendly. Your users' trust depends on it.
