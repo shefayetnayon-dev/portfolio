@@ -1,0 +1,48 @@
+---
+title: 'Mastering Tailwind CSS: 5 Pro Tips'
+date: '2024-12-10'
+excerpt: 'Stop writing messy utility classes. Learn how to use @apply effectively and customize your tailwind.config.ts for cleaner code.'
+category: 'CSS'
+author: 'Shefayet Nayon'
+readTime: '5 min read'
+version: 'v1.1.0'
+---
+
+# Taming the Utility Beast
+
+Tailwind CSS is amazing, but your HTML can quickly look like a war zone. Here are 5 tips to keep your codebase clean.
+
+## 1. The `clsx` and `tailwind-merge` Combo
+
+Use a utility function implementation like `cn()` to merge classes conditionally without conflicts.
+
+```ts
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
+```
+
+## 2. Plugins are your friend
+
+Don't reinvent the wheel. Use `tailwindcss-animate` for easy animations and `@tailwindcss/typography` for beautiful markdown rendering (like this blog!).
+
+## 3. Custom Color Palettes
+
+Define your colors in `tailwind.config.ts` using HSL variables for instant dark mode support.
+
+```js
+theme: {
+  extend: {
+    colors: {
+      primary: "hsl(var(--primary))",
+    }
+  }
+}
+```
+
+## Conclusion
+
+Mastering the configuration is the key to unlocking Tailwind's full potential.

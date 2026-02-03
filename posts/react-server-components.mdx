@@ -1,0 +1,45 @@
+---
+title: 'React Server Components: A Deep Dive'
+date: '2025-01-05'
+excerpt: 'Understanding the mental model shift required for RSC. How to mix server and client components effectively without shooting yourself in the foot.'
+category: 'Deep Dive'
+author: 'Shefayet Nayon'
+readTime: '12 min read'
+version: 'v3.0.0'
+---
+
+# The Paradigm Shift
+
+React Server Components (RSC) allow you to write UI that can be rendered on the server. This sounds simple, but it fundamentally changes how we build React apps.
+
+## The "Waterflow" Problem
+
+In traditional React, we often had network waterfalls.
+
+1. App mounts
+2. Header fetches user
+3. Dashboard fetches stats
+
+With RSC, we can fetch everything in parallel on the server before sending HTML to the client.
+
+## Client Components
+
+Use `"use client"` at the top of a file to mark it as a Client Component. This is required for:
+- `useState`
+- `useEffect`
+- Event listeners (`onClick`)
+
+```tsx
+"use client";
+
+import { useState } from 'react';
+
+export default function Counter() {
+  const [count, setCount] = useState(0);
+  return <button onClick={() => setCount(c => c + 1)}>{count}</button>;
+}
+```
+
+## Summary
+
+RSC is not just for performance; it's a better composition model for data-heavy applications.

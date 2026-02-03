@@ -1,0 +1,53 @@
+---
+title: 'Migrating to Next.js 14: A Comprehensive Guide'
+date: '2024-11-20'
+excerpt: 'Detailed walkthrough of the migration process, including server actions, partial prerendering, and performance improvements.'
+category: 'Tutorial'
+author: 'Shefayet Nayon'
+readTime: '8 min read'
+version: 'v2.4.0'
+---
+
+# Introduction
+
+Next.js 14 brings a stable version of Server Actions, partial prerendering, and significant performance upgrades. In this guide, we'll walk through migrating a large-scale application from Next.js 13 pages router to the new App Router.
+
+## Why Migrate?
+
+1. **Performance**: Server Components reduce client-side bundle size.
+2. **DX**: Simplified data fetching with `await` in React components.
+3. **Simplicity**: No more `getServerSideProps` or `getStaticProps` boilerplate.
+
+```tsx
+// Before (Pages Router)
+export async function getServerSideProps() {
+  const res = await fetch('https://api.example.com/data')
+  const data = await res.json()
+  return { props: { data } }
+}
+
+// After (App Router)
+async function Page() {
+  const res = await fetch('https://api.example.com/data')
+  const data = await res.json()
+  return <main>{data.title}</main>
+}
+```
+
+## Step 1: Upgrading Dependencies
+
+First, ensure you have the latest version of Next.js, React, and React DOM.
+
+```bash
+npm install next@latest react@latest react-dom@latest
+```
+
+## Step 2: caching and Revalidating
+
+Next.js 14 has improved caching heuristics. By default, `fetch` requests are cached indefinitely.
+
+> Use `revalidatePath` to purge cache on-demand.
+
+## Conclusion
+
+The migration is worth the effort for the long-term maintainability and performance benefits.

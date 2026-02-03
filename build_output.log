@@ -1,0 +1,24 @@
+
+> portfolio@0.1.0 build
+> next build --turbopack
+
+▲ Next.js 16.2.0-canary.24 (Turbopack)
+- Environments: .env.local
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.9s
+  Running TypeScript ...
+Failed to compile.
+
+./lib/blog.ts:47:5
+Type error: Type '{ content: string; slug: string; }[]' is not assignable to type 'BlogPost[]'.
+  Type '{ content: string; slug: string; }' is missing the following properties from type 'BlogPost': title, date, excerpt, category, and 3 more.
+
+[0m [90m 45 |[39m
+ [90m 46 |[39m     [90m// Sort posts by date[39m
+[31m[1m>[22m[39m[90m 47 |[39m     [36mreturn[39m allPostsData[33m.[39msort((a[33m,[39m b) [33m=>[39m {
+ [90m    |[39m     [31m[1m^[22m[39m
+ [90m 48 |[39m         [36mif[39m (a[33m.[39mdate [33m<[39m b[33m.[39mdate) {
+ [90m 49 |[39m             [36mreturn[39m [35m1[39m[33m;[39m
+ [90m 50 |[39m         } [36melse[39m {[0m
+Next.js build worker exited with code: 1 and signal: null

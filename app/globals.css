@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+:root {
+  /* Pro Developer Theme Variables */
+  --background: #0d1117; /* Deep dark background (GitHub Dark Dimmed style) */
+  --foreground: #c9d1d9; /* Soft white text */
+  
+  /* Accents */
+  --primary: #58a6ff; /* Blue */
+  --secondary: #238636; /* Green */
+  --accent: #bd93f9; /* Purple */
+  --danger: #f85149; /* Red */
+  --warning: #d29922; /* Orange/Yellow */
+  
+  /* UI Elements */
+  --card-bg: #161b22;
+  --border: #30363d;
+  --code-bg: #0d1117;
+  
+  /* Fonts */
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains-mono);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-card: var(--card-bg);
+  --color-border: var(--border);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Utility Classes for Developer Vibe */
+.glass-panel {
+  background: rgba(22, 27, 34, 0.7);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+}
+
+.neon-text {
+  text-shadow: 0 0 5px var(--primary), 0 0 10px var(--primary);
+}
+
+.code-block {
+  font-family: var(--font-mono);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+.terminal-cursor::after {
+  content: '|';
+  animation: blink 1s step-start infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Advanced Utilities */
+.glass-panel {
+  background: rgba(22, 27, 34, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(48, 54, 61, 0.6);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px rgba(88, 166, 255, 0.5), 0 0 20px rgba(88, 166, 255, 0.3);
+}
+
+.box-glow {
+  box-shadow: 0 0 20px rgba(88, 166, 255, 0.15);
+}
+
+.terminal-cursor::after {
+  content: '';
+  display: inline-block;
+  width: 0.6em;
+  height: 1.2em;
+  background-color: var(--green-500, #238636);
+  vertical-align: middle;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+/* Grid Background Animation */
+.bg-grid-pattern {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(128, 128, 128, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(128, 128, 128, 0.05) 1px, transparent 1px);
+}
+
+
+/* Syntax Highlighting */
+figure[data-rehype-pretty-code-figure] {
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #282c34; /* Fallback */
+}
+
+figure[data-rehype-pretty-code-figure] pre {
+  margin: 0;
+  padding: 1rem 0;
+  overflow-x: auto;
+  border-radius: 0;
+}
+
+figure[data-rehype-pretty-code-figure] code {
+  display: grid;
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  line-height: 1.6;
+  counter-reset: line;
+}
+
+figure[data-rehype-pretty-code-figure] code > [data-line] {
+  padding: 0 1rem;
+  border-left: 2px solid transparent;
+}
+
+figure[data-rehype-pretty-code-figure] code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: #636f88;
+  font-size: 0.75rem;
+}
+
+/* Highlighted Line */
+figure[data-rehype-pretty-code-figure] code > [data-highlighted-line] {
+  background: rgba(46, 54, 61, 0.6); /* GitHub Dark Dimmed highlight */
+  border-left-color: var(--primary);
+}
+
+/* File Title in Code Block (Optional) */
+figure[data-rehype-pretty-code-figure] figcaption {
+  font-size: 0.875rem;
+  color: var(--foreground);
+  padding: 0.5rem 1rem;
+  background: #1e222a;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-sans);
+  font-weight: 500;
+}

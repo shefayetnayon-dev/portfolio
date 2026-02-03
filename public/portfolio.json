@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "title": "Tech Blog",
+    "category": "Blog",
+    "image": "https://i.postimg.cc/ZKVFCWNY/images-1.jpg",
+    "url": "https://example.com/tech-blog"
+  },
+  {
+    "id": 2,
+    "title": "E-commerce Platform",
+    "category": "E-commerce",
+    "image": "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+    "url": "https://example.com/ecommerce"
+  },
+  {
+    "id": 3,
+    "title": "Education Portal",
+    "category": "Edu",
+    "image": "https://i.postimg.cc/PrtQXWPF/images-2.jpg",
+    "url": "https://example.com/education"
+  },
+  {
+    "id": 4,
+    "title": "Personal Portfolio",
+    "category": "Personal",
+    "image": "https://i.postimg.cc/YC0NgtN6/508e71c2dcd805f0793641de015278923950e89431f47740dcbc4e143cc27cad.jpg",
+    "url": "https://example.com/portfolio"
+  },
+  {
+    "id": 5,
+    "title": "News Portal",
+    "category": "Newspaper",
+    "image": "https://i.postimg.cc/CMC4pPLq/inline-preview.png",
+    "url": "https://example.com/news"
+  },
+  {
+    "id": 6,
+    "title": "Tech Blog 2",
+    "category": "Blog",
+    "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80",
+    "url": "https://example.com/tech-blog-2"
+  }
+]
