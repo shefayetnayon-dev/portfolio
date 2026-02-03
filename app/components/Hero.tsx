@@ -7,7 +7,7 @@ import { FiTerminal, FiGithub, FiLinkedin, FiTwitter, FiCpu, FiCode, FiDatabase,
 
 const Hero = () => {
   const [text, setText] = useState('');
-  const fullText = "Building digital experiences...";
+  const fullText = "digital experiences...";
   const [cursorVisible, setCursorVisible] = useState(true);
   const [glitch, setGlitch] = useState(false);
 
@@ -84,7 +84,7 @@ const Hero = () => {
             </h1>
 
             <div className="h-8 mb-8 font-mono text-lg md:text-xl text-green-400 flex items-center bg-[#0d1117]/50 w-fit px-2 rounded border border-gray-800 backdrop-blur-sm">
-              <span className="mr-3 text-blue-400">~/mission</span>
+              <span className="mr-3 text-blue-400">~/Building</span>
               <span className="mr-2 text-gray-500">$</span>
               <span>{text}</span>
               <span className={`${cursorVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-100 ml-1 bg-green-500 w-2 h-5 inline-block`}></span>
