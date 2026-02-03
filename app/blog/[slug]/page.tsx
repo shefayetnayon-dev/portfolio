@@ -1,5 +1,6 @@
 // app/blog/[slug]/page.tsx
 import { getPostBySlug, getSortedPostsData } from '@/lib/blog';
+import { generateBreadcrumbSchema } from '@/lib/breadcrumbs';
 import { notFound } from 'next/navigation';
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Link from 'next/link';
@@ -31,21 +32,60 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
     };
   }
 
+  const baseUrl = 'https://shefayetnayon.netlify.app';
+  const postUrl = `${baseUrl}/blog/${slug}`;
+  const ogImageUrl = `${baseUrl}/og-image.png`;
+
+  // Extract keywords from category and title
+  const keywords = [
+    post.category.toLowerCase(),
+    ...post.title.toLowerCase().split(' ').filter(word => word.length > 3),
+    'web development',
+    'programming',
+    'tutorial'
+  ];
+
   return {
     title: post.title,
     description: post.excerpt,
+    keywords: keywords,
+    authors: [{ name: post.author }],
+    alternates: {
+      canonical: postUrl,
+    },
     openGraph: {
       title: post.title,
       description: post.excerpt,
+      url: postUrl,
+      siteName: 'Shefayet Nayon Portfolio',
+      locale: 'en_US',
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],
+      tags: [post.category],
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-    }
+      creator: '@ShefayetNayon',
+      images: [ogImageUrl],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   };
 }
 
@@ -76,6 +116,56 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   return (
     <div className="min-h-screen bg-[#0d1117] text-gray-300 font-sans selection:bg-green-900/30 selection:text-green-400">
+
+      {/* JSON-LD Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Article",
+            headline: post.title,
+            description: post.excerpt,
+            image: "https://shefayetnayon.netlify.app/og-image.png",
+            datePublished: post.date,
+            dateModified: post.date,
+            author: {
+              "@type": "Person",
+              name: post.author,
+              url: "https://shefayetnayon.netlify.app",
+            },
+            publisher: {
+              "@type": "Person",
+              name: "Shefayet Nayon",
+              logo: {
+                "@type": "ImageObject",
+                url: "https://shefayetnayon.netlify.app/og-image.png",
+              },
+            },
+            mainEntityOfPage: {
+              "@type": "WebPage",
+              "@id": `https://shefayetnayon.netlify.app/blog/${slug}`,
+            },
+            keywords: post.category,
+            articleSection: post.category,
+            wordCount: post.content.split(' ').length,
+          }),
+        }}
+      />
+
+      {/* Breadcrumb Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            generateBreadcrumbSchema([
+              { name: 'Home', url: 'https://shefayetnayon.netlify.app' },
+              { name: 'Blog', url: 'https://shefayetnayon.netlify.app/blog' },
+              { name: post.title, url: `https://shefayetnayon.netlify.app/blog/${slug}` },
+            ])
+          ),
+        }}
+      />
 
       {/* Immersive Header Background */}
       <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-b from-blue-900/10 to-[#0d1117] pointer-events-none z-0"></div>
